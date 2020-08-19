@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
  * @author Vandson Lima (vandson.vslima@gmail.com)
  * @since 18/08/2020
  **/
+//1
 @Entity
 @Table
 public class Categoria {

@@ -11,6 +11,7 @@ import javax.validation.Valid;
  * @author Vandson (vaondson.vslima@gmail.com)
  * @since 18/08/2020
  **/
+//2
 @RestController
 public class NovaCategoriaController {
 
@@ -21,7 +22,6 @@ public class NovaCategoriaController {
     }
 
     @PostMapping("/categoria")
-    @Transactional
     public String criar(@RequestBody @Valid NovaCategoriaRequest novaCategoriaRequest) {
         Categoria novaCategoria = novaCategoriaRequest.model(categoriaRepository);
         categoriaRepository.save(novaCategoria);

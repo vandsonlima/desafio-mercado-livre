@@ -10,13 +10,13 @@ import java.util.Objects;
  * @author Vandson Lima (vandson.vslima@gmail.com)
  * @since 18/08/2020
  **/
+//3
 public class NovaCategoriaRequest {
 
     @NotBlank
-    //@UniqueValue(domainClass = Categoria.class, fieldName = "nome")
+    @UniqueValue(domainClass = Categoria.class, fieldName = "nome")
     private String nome;
 
-    //@ExistsId(domainClass = Categoria.class, fieldName = "idCategoriaMae")
     private Long idCategoriaMae;
 
     public NovaCategoriaRequest(@NotBlank String nome, Long idCategoriaMae) {
