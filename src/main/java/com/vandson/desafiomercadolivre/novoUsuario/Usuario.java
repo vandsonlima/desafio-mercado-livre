@@ -22,7 +22,7 @@ public class Usuario {
     @NotBlank
     @Email
     @Column(unique = true)
-    private String login;
+    private String email;
 
     @NotBlank
     @Size(min = 6)
@@ -33,11 +33,11 @@ public class Usuario {
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
 
-    Usuario(@NotBlank @Email String login, @Valid SenhaLimpa senhaLimpa) {
-        Assert.hasLength(login, "Login não pode ser vazio");
+    Usuario(@NotBlank @Email String email, @Valid SenhaLimpa senhaLimpa) {
+        Assert.hasLength(email, "Login não pode ser vazio");
         Assert.notNull(senhaLimpa, "Senha não pode ser nula");
 
-        this.login = login;
+        this.email = email;
         this.senha = senhaLimpa.hash();
     }
 
@@ -45,7 +45,7 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", dataCriacao=" + dataCriacao +
                 '}';
