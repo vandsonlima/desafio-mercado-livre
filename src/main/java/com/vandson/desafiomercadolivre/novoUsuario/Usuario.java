@@ -32,6 +32,9 @@ public class Usuario {
     @NotNull
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
+    @Deprecated
+    public Usuario() {
+    }
 
     Usuario(@NotBlank @Email String email, @Valid SenhaLimpa senhaLimpa) {
         Assert.hasLength(email, "Login não pode ser vazio");
@@ -39,6 +42,14 @@ public class Usuario {
 
         this.email = email;
         this.senha = senhaLimpa.hash();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 
     @Override
