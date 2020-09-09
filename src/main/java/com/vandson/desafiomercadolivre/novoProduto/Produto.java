@@ -1,18 +1,18 @@
 package com.vandson.desafiomercadolivre.novoProduto;
 
+import com.vandson.desafiomercadolivre.compartilhado.UsuarioLogado;
 import com.vandson.desafiomercadolivre.novaCategoria.Categoria;
+import com.vandson.desafiomercadolivre.novoProduto.imagens.ImagemProduto;
 import com.vandson.desafiomercadolivre.novoUsuario.Usuario;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,6 +54,9 @@ public class Produto {
     @ManyToOne
     private Usuario proprietario;
 
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    private Set<ImagemProduto> imagens = new HashSet<>();
+
     @Deprecated
     public Produto(){
 
@@ -80,6 +83,21 @@ public class Produto {
         this.proprietario = proprietario;
     }
 
+    public boolean pertenceAoUsuarioLogado(UsuarioLogado usuarioLogado) {
+        return this.proprietario.equals(usuarioLogado.get());
+    }
+
+    public void adicionaNovasImagens(@NotEmpty Set<String> novasImagens) {
+        Set<ImagemProduto> links = novasImagens.stream()
+                .map(imagem -> new ImagemProduto(this, imagem))
+                .collect(Collectors.toSet());
+    this.imagens.addAll(links);
+    }
+
+    public Set<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
@@ -92,6 +110,7 @@ public class Produto {
                 ", categoria=" + categoria +
                 ", instantCriacao=" + instantCriacao +
                 ", proprietario=" + proprietario +
+                ", imagens=" + imagens +
                 '}';
     }
 }

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Vandson Lima (vandson.vslima@gmail.com)
@@ -60,5 +61,21 @@ public class Usuario {
                 ", senha='" + senha + '\'' +
                 ", dataCriacao=" + dataCriacao +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, senha, dataCriacao);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) &&
+                Objects.equals(email, usuario.email) &&
+                Objects.equals(senha, usuario.senha) &&
+                Objects.equals(dataCriacao, usuario.dataCriacao);
     }
 }
