@@ -98,6 +98,14 @@ public class Produto {
         return imagens;
     }
 
+    public Usuario getProprietario() {
+        return proprietario;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
