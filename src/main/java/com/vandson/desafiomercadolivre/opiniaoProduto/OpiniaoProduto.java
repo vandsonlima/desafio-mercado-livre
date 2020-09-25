@@ -3,6 +3,7 @@ package com.vandson.desafiomercadolivre.opiniaoProduto;
 import com.vandson.desafiomercadolivre.compartilhado.UsuarioLogado;
 import com.vandson.desafiomercadolivre.novoProduto.Produto;
 import com.vandson.desafiomercadolivre.novoUsuario.Usuario;
+import io.jsonwebtoken.lang.Assert;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -43,6 +44,9 @@ public class OpiniaoProduto {
     }
 
     public OpiniaoProduto(@NotBlank String titulo, @NotBlank String descricao, @NotNull @Min(value = 1) @Max(value = 5) int nota, @NotNull @Valid Produto produtoSelecionado, @NotNull @Valid UsuarioLogado usuarioLogado) {
+        Assert.notNull(produtoSelecionado, "O produto não pode ser nulo");
+        Assert.notNull(usuarioLogado, "O usuário logado não pode ser nulo");
+
         this.titulo = titulo;
         this.descricao = descricao;
         this.nota = nota;
