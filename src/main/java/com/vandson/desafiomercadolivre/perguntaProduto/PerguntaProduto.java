@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * @author Vandson (vandson.vslima@gmail.com)
@@ -45,6 +44,22 @@ public class PerguntaProduto {
         this.usuario = usuario;
     }
 
+    public Produto getProdutoSelecionado() {
+        return produtoSelecionado;
+    }
+
+    public LocalDateTime getInstant() {
+        return instant;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
     @Override
     public String toString() {
         return "PerguntaProduto{" +
@@ -57,8 +72,4 @@ public class PerguntaProduto {
                 '}';
     }
 
-    public void notificarVendedor(String url) {
-        String emailVendedor = Optional.ofNullable(produtoSelecionado.getProprietario()).map(Usuario::getEmail).orElseThrow(() -> new IllegalStateException("O email do vendedor não foi indetificado para a notificação"));
-        System.out.println("enviando e-mail ao vendedor: "+ emailVendedor + " link: " + url);
-    }
 }
