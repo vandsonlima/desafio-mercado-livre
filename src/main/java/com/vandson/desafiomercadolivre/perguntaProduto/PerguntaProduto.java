@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Vandson (vandson.vslima@gmail.com)
@@ -72,4 +73,22 @@ public class PerguntaProduto {
                 '}';
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PerguntaProduto that = (PerguntaProduto) o;
+        return titulo.equals(that.titulo) &&
+                produtoSelecionado.equals(that.produtoSelecionado) &&
+                usuario.equals(that.usuario);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, produtoSelecionado, usuario);
+    }
 }

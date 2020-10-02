@@ -48,10 +48,4 @@ public class ImagemProdutoController {
         return produtoSelecionado.toString();
     }
 
-
-    @GetMapping("/produto/{id}")
-    public String getProduto(@PathVariable Long id){
-        Produto produto = entityManager.find(Produto.class, id);
-        return produto.toString();
-    }
 }

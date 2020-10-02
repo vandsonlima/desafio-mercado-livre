@@ -4,6 +4,7 @@ import com.vandson.desafiomercadolivre.compartilhado.UsuarioLogado;
 import com.vandson.desafiomercadolivre.novaCategoria.Categoria;
 import com.vandson.desafiomercadolivre.novoProduto.imagens.ImagemProduto;
 import com.vandson.desafiomercadolivre.novoUsuario.Usuario;
+import com.vandson.desafiomercadolivre.perguntaProduto.PerguntaProduto;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
 
@@ -15,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -57,6 +59,10 @@ public class Produto {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
     private Set<ImagemProduto> imagens = new HashSet<>();
 
+    @OneToMany(mappedBy = "produtoSelecionado")
+    @OrderBy("titulo desc")
+    private Set<PerguntaProduto> perguntas;
+
     @Deprecated
     public Produto(){
 
@@ -94,8 +100,8 @@ public class Produto {
     this.imagens.addAll(links);
     }
 
-    public Set<ImagemProduto> getImagens() {
-        return imagens;
+    public <T> Set<T> mapImagens(Function<ImagemProduto, T> funcaoMapeadora){
+        return imagens.stream().map(funcaoMapeadora).collect(Collectors.toSet());
     }
 
     public Usuario getProprietario() {
@@ -104,6 +110,22 @@ public class Produto {
 
     public Long getId() {
         return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
     @Override
@@ -120,5 +142,13 @@ public class Produto {
                 ", proprietario=" + proprietario +
                 ", imagens=" + imagens +
                 '}';
+    }
+
+    public <T> Set<T> mapCaracteristicas(Function<CaracteristicaProduto, T> function) {
+        return this.caracteristicas.stream().map(function).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapPerguntas(Function<PerguntaProduto, T> funcao) {
+        return perguntas.stream().map(funcao).collect(Collectors.toSet());
     }
 }
