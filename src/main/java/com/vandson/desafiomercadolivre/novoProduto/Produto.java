@@ -4,6 +4,7 @@ import com.vandson.desafiomercadolivre.compartilhado.UsuarioLogado;
 import com.vandson.desafiomercadolivre.novaCategoria.Categoria;
 import com.vandson.desafiomercadolivre.novoProduto.imagens.ImagemProduto;
 import com.vandson.desafiomercadolivre.novoUsuario.Usuario;
+import com.vandson.desafiomercadolivre.opiniaoProduto.OpiniaoProduto;
 import com.vandson.desafiomercadolivre.perguntaProduto.PerguntaProduto;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
@@ -13,7 +14,6 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -60,8 +60,11 @@ public class Produto {
     private Set<ImagemProduto> imagens = new HashSet<>();
 
     @OneToMany(mappedBy = "produtoSelecionado")
-    @OrderBy("titulo desc")
-    private Set<PerguntaProduto> perguntas;
+    @OrderBy("titulo ASC")
+    private Set<PerguntaProduto> perguntas = new HashSet<>();
+
+    @OneToMany(mappedBy = "produtoSelecionado")
+    private Set<OpiniaoProduto> opinioes = new HashSet<>();
 
     @Deprecated
     public Produto(){
@@ -104,6 +107,18 @@ public class Produto {
         return imagens.stream().map(funcaoMapeadora).collect(Collectors.toSet());
     }
 
+    public <T> Set<T> mapCaracteristicas(Function<CaracteristicaProduto, T> function) {
+        return this.caracteristicas.stream().map(function).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapPerguntas(Function<PerguntaProduto, T> funcao) {
+        return perguntas.stream().map(funcao).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapOpinioes(Function<OpiniaoProduto, T> function) {
+        return this.opinioes.stream().map(function).collect(Collectors.toSet());
+    }
+
     public Usuario getProprietario() {
         return proprietario;
     }
@@ -118,10 +133,6 @@ public class Produto {
 
     public BigDecimal getValor() {
         return valor;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
     }
 
     public String getDescricao() {
@@ -144,11 +155,8 @@ public class Produto {
                 '}';
     }
 
-    public <T> Set<T> mapCaracteristicas(Function<CaracteristicaProduto, T> function) {
-        return this.caracteristicas.stream().map(function).collect(Collectors.toSet());
-    }
 
-    public <T> Set<T> mapPerguntas(Function<PerguntaProduto, T> funcao) {
-        return perguntas.stream().map(funcao).collect(Collectors.toSet());
+    public BigDecimal mediaNotasOpinioes() {
+        return BigDecimal.valueOf(this.opinioes.stream().mapToInt(OpiniaoProduto::getNota).average().orElse(0d));
     }
 }

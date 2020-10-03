@@ -14,4 +14,12 @@ public class DetalheCaracteristica {
         this.nome = caracteristicaProduto.getNome();
         this.descricao = caracteristicaProduto.getDescricao();
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }

@@ -18,5 +18,15 @@ public class DetalhePergunta {
         this.nomeAutor = perguntaProduto.getUsuario().getEmail();
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getNomeAutor() {
+        return nomeAutor;
+    }
 }

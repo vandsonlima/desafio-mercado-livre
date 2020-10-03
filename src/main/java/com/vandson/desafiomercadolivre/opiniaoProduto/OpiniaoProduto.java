@@ -47,6 +47,7 @@ public class OpiniaoProduto {
         Assert.notNull(produtoSelecionado, "O produto não pode ser nulo");
         Assert.notNull(usuarioLogado, "O usuário logado não pode ser nulo");
 
+
         this.titulo = titulo;
         this.descricao = descricao;
         this.nota = nota;
@@ -54,6 +55,17 @@ public class OpiniaoProduto {
         this.usuario = usuarioLogado.get();
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getNota() {
+        return nota;
+    }
 
     @Override
     public String toString() {
