@@ -139,6 +139,10 @@ public class Produto {
         return descricao;
     }
 
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
@@ -158,5 +162,24 @@ public class Produto {
 
     public BigDecimal mediaNotasOpinioes() {
         return BigDecimal.valueOf(this.opinioes.stream().mapToInt(OpiniaoProduto::getNota).average().orElse(0d));
+    }
+
+    /**
+     * Verifica se o produto tem estoque suficiente
+     * para efetivar um pedido com a quantidade informada
+     *
+      * @param quantidadePedido
+     * @return true - se há estoque suficiente para a compra
+     */
+    public boolean temEstoque(@Positive int quantidadePedido){
+        Assert.isTrue(quantidadePedido > 0, "a quantidade precisa ser maior que zero");
+        return this.quantidade - quantidadePedido >=0;
+    }
+
+    public void abateEstoque(@Positive int quantidade) {
+        Assert.isTrue(quantidade > 0, "A quantidade deve ser maior que zero");
+        Assert.isTrue((this.quantidade - quantidade) > 0, "Não há quantidade em estoque suficiente para realizar a compra");
+
+        this.quantidade -= quantidade;
     }
 }

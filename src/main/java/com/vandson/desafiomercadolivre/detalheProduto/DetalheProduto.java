@@ -17,6 +17,7 @@ public class DetalheProduto {
     private final String nome;
     private final BigDecimal valor;
     private final String descricao;
+    private final Integer quantidade;
     private final Set<String> imagensLinks;
     //1
     private final Set<DetalheCaracteristica> detalhesCaracteristicas;
@@ -33,6 +34,7 @@ public class DetalheProduto {
         this.nome = produto.getNome();
         this.valor = produto.getValor();
         this.descricao = produto.getDescricao();
+        this.quantidade = produto.getQuantidade();
         //1
         this.imagensLinks = produto.mapImagens(ImagemProduto::getUrl);
         //1
@@ -79,5 +81,9 @@ public class DetalheProduto {
 
     public Integer getTotalNotas() {
         return totalNotas;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
     }
 }

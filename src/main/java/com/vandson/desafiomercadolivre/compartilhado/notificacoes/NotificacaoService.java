@@ -1,6 +1,7 @@
 package com.vandson.desafiomercadolivre.compartilhado.notificacoes;
 
 import com.vandson.desafiomercadolivre.compartilhado.email.MailService;
+import com.vandson.desafiomercadolivre.novaCompra.Pedido;
 import com.vandson.desafiomercadolivre.perguntaProduto.PerguntaProduto;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,12 @@ public class NotificacaoService {
                 perguntaProduto.getTitulo(), perguntaProduto.getDescricao());
 
         mailer.send(perguntaProduto.getProdutoSelecionado().getProprietario().getEmail(), mensagem );
+    }
+
+    public void novaCompra(Pedido novoPedido) {
+        String mensagem = String.format(" Novo Pedido de compra registrado. Produto %s, Quantidade %s",
+                novoPedido.getProduto().getNome(), novoPedido.getQuantidade());
+
+        mailer.send(novoPedido.getProduto().getProprietario().getEmail(), mensagem );
     }
 }
